@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView , DetailView
-from .models import Product 
+from .models import Product, Brand , Category
 # Create your views here.
 
 class ProductList(ListView):
@@ -11,3 +11,15 @@ class ProductList(ListView):
     
 class ProductDetail(DetailView):
     model = Product
+
+
+class CategoryList(ListView):
+    model = Category
+
+class BrandList(ListView):
+    model = Brand
+    extra_context = {
+        'categories' : Category.objects.all() }
+
+class BrandDetail(DetailView):
+    model = Product  

@@ -37,7 +37,7 @@ class Product(models.Model):
        super(Product, self).save(*args, **kwargs) # Call the real save() method
    
 class ProductImage(models.Model):
-    product = models.ForeignKey(Product ,verbose_name=_('Product'), on_delete=models.CASCADE , related_name='prodct_image')
+    product = models.ForeignKey(Product ,verbose_name=_('Product'), on_delete=models.CASCADE , related_name='product_image')
     image = models.ImageField(_('Image'),upload_to = 'product_images')
 
     def __str__(self):
@@ -46,20 +46,29 @@ class ProductImage(models.Model):
 class Category(models.Model):
     name = models.CharField(_('Name') , max_length=100)  
     image = models.ImageField(_('Image'),upload_to='category/') 
+    slug = models.SlugField(null=True,blank=True)
 
       
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+       self.slug = slugify(self.name)    
+       super(Category, self).save(*args, **kwargs)
+
 class Brand(models.Model):
     name = models.CharField(_('Name'),max_length=100)
     image = models.ImageField(_('Image'),upload_to='brand/')
     category = models.ForeignKey(Category,verbose_name=_('Category'), related_name='brand_category',on_delete=models.CASCADE)
+    slug = models.SlugField(null=True,blank=True)
 
      
     def __str__(self):
         return self.name
-    
+
+    def save(self, *args, **kwargs):
+       self.slug = slugify(self.name)    
+       super(Brand, self).save(*args, **kwargs)
 
 class ProductReview(models.Model):
     user = models.ForeignKey(User,verbose_name=_('User'),on_delete=models.SET_NULL, null=True,blank=True)
@@ -70,3 +79,5 @@ class ProductReview(models.Model):
 
     def __str__(self):
         return str(self.user)
+    
+ 
