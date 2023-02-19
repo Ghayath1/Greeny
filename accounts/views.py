@@ -19,7 +19,7 @@ def signup(request):
             send_mail(
                 subject='Activate Your Account',
                 message= f'Welcome {username} , use this code {profile.code} to activate your account',
-                from_email='ghayath94sh@gmail.com',
+                from_email='',
                 recipient_list=[email],
                 fail_silently=False,
             )
