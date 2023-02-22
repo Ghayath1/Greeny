@@ -6,7 +6,7 @@ from .models import Post , Category , Comment , Author
 # Register your models here.
 
 class PostAdmin(admin.ModelAdmin):
-     summernote_fields = '__all__'
+     #summernote_fields = '__all__'
      list_display = ['title','author','category']
      list_filter = ['category','author']
      search_fields = ['title','content']
